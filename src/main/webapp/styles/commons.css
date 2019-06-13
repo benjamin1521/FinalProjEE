@@ -1,0 +1,116 @@
+html
+,body{
+    height: 100%;
+    background-color: #F4F4F4;
+}
+
+.change-language-container {
+    float: right;
+    margin-right: 20px;
+}
+
+.btn.btn-default {
+    vertical-align: inherit;
+}
+
+.select-container {
+    display: inline-block;
+}
+
+.panel-body {
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    margin-bottom: 10px;
+    height: 40px;
+    position: fixed;
+}
+
+.info-message-label {
+    color: red;
+    text-align: center;
+}
+
+.center-block {
+    width: 500px;
+    margin-top: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.navigation-block {
+    float: right;
+}
+
+.intend-paragraph {
+    margin-left: 20px;
+}
+
+.AT_THE_INSPECTION {
+    background-color: rgba(0,0,0,.075);
+}
+
+.CHANGES_REQUESTED {
+    background-color: #b8daff;
+}
+
+.REJECTED {
+    background-color: #f5c6cb;
+}
+
+.APPROVED {
+    background-color: #c3e6cb;
+}
+
+.table-container {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.UPLOAD {
+    color: #000000;
+}
+
+.REQUEST_INSPECTOR_REPLACE {
+    color: #f4b342;
+}
+
+.REQUEST_CHANGES {
+    color: #4347ad;
+}
+
+.REJECT {
+    color: #ed4253;
+}
+
+.APPROVE {
+    color: #1ca539;
+}
+
+.btn-group-justified {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate;
+}
+
+.btn-group-justified .btn, .btn-group-justified .btn-group {
+    float: none;
+    display: table-cell;
+    width: 1%;
+}
+
+.title {
+    color: grey;
+    text-align: center;
+}
+
+.label {
+    color: grey;
+}
+
+.center-text {
+    margin-top: 200px;
+    text-align: center;
+}
