@@ -13,8 +13,8 @@ import java.util.HashSet;
 
 public class MainServlet extends HttpServlet {
 
-    public static final String REDIRECT = "redirect:";
-    public static final String FORMAT = "/view/%s.jsp";
+    private static final String REDIRECT = "redirect:";
+    private static final String FORMAT = "/view/%s.jsp";
 
     private CommandFactory commandFactory = CommandFactory.getInstance();
 
@@ -108,7 +108,7 @@ public class MainServlet extends HttpServlet {
 //        path = path.replaceAll(".*/app/", "");
 ////        System.out.println(path);
 //
-//        Command command = commands.getOrDefault(path, defaultCommand);
+//        Command command = commands.getOrNull(path, defaultCommand);
 //        String page = command.execute(request);
 //        if (page.contains(REDIRECT)) {
 //            response.sendRedirect(request.getContextPath() + request.getServletPath() + page.substring(REDIRECT.length()));

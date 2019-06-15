@@ -36,7 +36,6 @@ public class CommandFactory {
         commands.put("/guest", new ShowLogin());
         commands.put("/guest/registration", new ShowRegistration());
 
-
         commands.put("login", new Login());
         commands.put("registration", new Registration());
 
@@ -53,10 +52,11 @@ public class CommandFactory {
         //inspector
         commands.put("/inspector", new ShowMainPage());
         commands.put("/inspector/reports", new ShowReports());
-        //TODO: reports by id
         commands.put("/inspector/details", new ShowDetails());
 
-        commands.put("changeStatus", new ChangeStatus());
+        commands.put("Approve", new ChangeStatus());
+        commands.put("Reject", new ChangeStatus());
+        commands.put("Shift", new ChangeStatus());
 
         //common
         commands.put("createMod", new CreateMod());
@@ -67,8 +67,7 @@ public class CommandFactory {
     }
 
     public Command getCommandPage(HttpServletRequest request) {
-        String path = request.getPathInfo() == null ? "/" : request.getPathInfo();
-        System.out.println("GCP: " + path);
+        String path = request.getPathInfo() == null ? "/" : request.getPathInfo().toLowerCase();
         return commands.getOrDefault(path, defaultCommand);
     }
 
@@ -80,7 +79,7 @@ public class CommandFactory {
             return getCommandPage(request);
         }
 
-        String path = request.getPathInfo() == null ? "/" : request.getPathInfo();
+        String path = request.getPathInfo() == null ? "/" : request.getPathInfo().toLowerCase();
         return commands.getOrDefault(command, commands.getOrDefault(command + ":" + path, defaultCommand));
     }
 }

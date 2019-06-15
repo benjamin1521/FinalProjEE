@@ -11,7 +11,7 @@ public class ChangeInspector implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        reportService.changeInspector((Report) request.getAttribute("report"));
-        return "redirect:client/reports";
+        reportService.changeInspector(Long.parseLong(request.getParameter("id")),Long.parseLong(request.getParameter("inspectorId")));
+        return "redirect:/client/reports?page=1";
     }
 }

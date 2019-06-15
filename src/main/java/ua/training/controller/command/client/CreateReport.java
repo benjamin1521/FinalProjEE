@@ -17,6 +17,6 @@ public class CreateReport implements Command {
                 request.getParameter("name"),
                 request.getParameter("comment"));
 
-        return "redirect:/client/reports";
+        return "redirect:/client/reports?page=1";
     }
 }

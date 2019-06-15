@@ -38,7 +38,7 @@ public class Registration implements Command {
 
             return CommandFactory.getInstance().getCommandPage(request).execute(request);
         }
-        request.setAttribute("message", "incorrect.field.values");
+        request.setAttribute("message", "text.wrong.registration");
         return CommandFactory.getInstance().getCommandPage(request).execute(request);
     }
 

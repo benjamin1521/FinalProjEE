@@ -10,7 +10,8 @@ public class DeleteReport implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-//        reportService.deleteReport(request.getAttribute());
-        return "redirect:client/reports";
+        reportService.deleteReport(Long.parseLong(request.getParameter("id")));
+
+        return "redirect:/client/reports?page=1";
     }
 }

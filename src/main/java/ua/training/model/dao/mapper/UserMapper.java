@@ -33,9 +33,4 @@ public class UserMapper implements ObjectMapper<User> {
         return result;
     }
 
-    @Override
-    public User makeUnique(Map<Long, User> cache, User subject) {
-        cache.putIfAbsent(subject.getId(), subject);
-        return cache.get(subject.getId());
-    }
 }

@@ -8,24 +8,23 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class ReportMapper implements ObjectMapper<Report> {
     @Override
     public Report extractOne(ResultSet rs) throws SQLException {
         return Report.newBuilder()
-                .id(rs.getLong("id"))
+                .id(rs.getLong("reports.id"))
                 .name(rs.getString("name"))
                 .status(Status.valueOf(rs.getString("status")))
                 .clientId(User.newBuilder()
                         .id(rs.getLong("client_id"))
-                        .fullNameEn(rs.getString("full_name_en"))
-                        .fullNameUa(rs.getString("full_name_ua"))
+                        .fullNameEn(rs.getString("client.full_name_en"))
+                        .fullNameUa(rs.getString("client.full_name_ua"))
                         .build())
                 .inspectorId(User.newBuilder()
                         .id(rs.getLong("inspector_id"))
-                        .fullNameEn(rs.getString("full_name_en"))
-                        .fullNameUa(rs.getString("full_name_ua"))
+                        .fullNameEn(rs.getString("inspector.full_name_en"))
+                        .fullNameUa(rs.getString("inspector.full_name_ua"))
                         .build())
                 .address(rs.getString("address"))
                 .bank_account(rs.getString("bank_account"))
@@ -45,31 +44,26 @@ public class ReportMapper implements ObjectMapper<Report> {
                 .build();
     }
 
-    public Report extractPart(ResultSet rs) throws SQLException {
-        return Report.newBuilder()
-                .id(rs.getLong("reports.id"))
-                .status(Status.valueOf(rs.getString("status")))
-                .build();
-    }
-
     @Override
     public List<Report> extractAll(ResultSet rs) throws SQLException {
         return null;
     }
 
-    @Override
-    public Report makeUnique(Map<Long, Report> cache, Report subject) {
-        cache.putIfAbsent(subject.getId(), subject);
-        return cache.get(subject.getId());
+    private Report extractPart(ResultSet rs) throws SQLException {
+        return Report.newBuilder()
+                .id(rs.getLong("reports.id"))
+                .name(rs.getString("name"))
+                .status(Status.valueOf(rs.getString("status")))
+                .build();
     }
 
-    public List<Report> paginationExtractTaxReturns(ResultSet rs) throws SQLException {
-        List<Report> paginationList = new ArrayList<>();
 
+    public List<Report> extractAllParts(ResultSet rs) throws SQLException {
+        List<Report> result = new ArrayList<>();
         while (rs.next()) {
-            paginationList.add(extractPart(rs));
+            result.add(extractPart(rs));
         }
 
-        return paginationList;
+        return result;
     }
 }

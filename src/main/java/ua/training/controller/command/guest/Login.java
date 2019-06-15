@@ -29,7 +29,7 @@ public class Login implements Command {
         } else {
             logger.info("unsuccessful attempt to login as " + username);
 
-            request.setAttribute("message", "incorrect.email.or.password");
+            request.setAttribute("message", "text.wrong.login");
             return CommandFactory.getInstance().getCommandPage(request).execute(request);
         }
     }

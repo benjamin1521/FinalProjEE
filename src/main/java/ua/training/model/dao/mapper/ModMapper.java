@@ -1,13 +1,13 @@
 package ua.training.model.dao.mapper;
 
 import ua.training.model.entities.Mod;
-import ua.training.model.entities.Report;
+import ua.training.model.entities.User;
 import ua.training.model.entities.enums.Action;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class ModMapper implements ObjectMapper<Mod> {
     @Override
@@ -16,22 +16,22 @@ public class ModMapper implements ObjectMapper<Mod> {
                 .id(rs.getLong("id"))
                 .action(Action.valueOf(rs.getString("action")))
                 .comment(rs.getString("comment"))
-                .date(rs.getDate("date"))
-                .reportsId(Report.newBuilder()
-                        .id(rs.getLong("reports_id"))
+                .date(rs.getTimestamp("date").toLocalDateTime())
+                .reportsId(rs.getLong("reports_id"))
+                .userId(User.newBuilder()
+                        .id(rs.getLong("user_id"))
+                        .fullNameUa(rs.getString("full_name_ua"))
+                        .fullNameEn(rs.getString("full_name_en"))
                         .build())
-                .userId(rs.getLong("user_id"))
                 .build();
     }
 
     @Override
     public List<Mod> extractAll(ResultSet rs) throws SQLException {
-        return null;
-    }
-
-    @Override
-    public Mod makeUnique(Map<Long, Mod> cache, Mod subject) {
-        cache.putIfAbsent(subject.getId(), subject);
-        return cache.get(subject.getId());
+        List<Mod> result = new ArrayList<>();
+        while (rs.next()) {
+            result.add(extractOne(rs));
+        }
+        return result;
     }
 }

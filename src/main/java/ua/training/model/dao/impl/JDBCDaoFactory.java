@@ -30,17 +30,6 @@ public class JDBCDaoFactory extends DaoFactory {
     private Connection getConnection() {
         try {
             return dataSource.getConnection();
-//            return DriverManager.getConnection(
-//                    "jdbc:mysql://localhost:3306/servlet_tax" +
-//                            "?verifyServerCertificate=false" +
-//                            "&useSSL=false" +
-//                            "&requireSSL=false" +
-//                            "&useLegacyDatetimeCode=false" +
-//                            "&amp" +
-//                            "&serverTimezone=UTC",
-//                    "root",
-//                    "asdfghqwe321");
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

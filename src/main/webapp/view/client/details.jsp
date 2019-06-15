@@ -7,56 +7,149 @@
     <div class="row">
         <div class="card col-6" style="margin-top: 10px;">
             <div class="card-body">
-                <h5 class="card-title"><fmt:message key="${report.category}"/></h5>
-                <p class="intend-paragraph card-text">
-                <p><fmt:message key="${report.status}"/> <fmt:parseDate value="${report.lastUpdate}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" /> <fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${parsedDateTime}"/></p>
-                <p><div class="label d-inline"><fmt:message key="text.client"/>: </div> <div class="d-inline"><c:out value="${customerName}"/></div></p>
-                <p><div class="label d-inline"><fmt:message key="text.inspector"/>: </div> <div class="d-inline"><c:out value="${inspectorName}" /></div></p>
-                </p>
-                <form class="form-group" method="post" action="${pageContext.request.contextPath}/download/tax-return">
-                    <input type="hidden" name="reportId" value="${param.id}">
-                    <input type="hidden" name="customerName" value="${report.customer.fullNameEn}">
-                    <button type="submit" class="btn btn-link"><fmt:message key="download.tax.return"/></button>
-                </form>
-
-                <form class="form-group" method="post" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <div class="input-default-wrapper mt-3">
-                            <input type="file" name="file" id="file-with-current" class="input-default-js">
-                            <label class="label-for-default-js rounded-right mb-3" for="file-with-current">
-                                <span class="span-choose-file"><fmt:message key="choose.a.file"/></span>
-                                <div class="float-right span-browse"><fmt:message key="browse"/></div>
-                            </label>
+                <div class="form-group mt-3">
+                    <form method="post">
+                        <div class="form-group">
+                            <fmt:message key="text.inspector"/>:
+                            <c:out value="${report.inspectorId.fullNameEn}"/>
                         </div>
-                    </div>
-                    <input type="hidden" name="lastUpdateId" value="${lastUpdateId}">
-                    <button type="submit" class="btn btn-primary" <c:if test="${disableUploadButton}">disabled</c:if>><fmt:message key="file.tax.return"/></button>
-                </form>
-                <form class="form-group" method="post">
-                    <input type="hidden" name="lastUpdateId" value="${lastUpdateId}">
-                    <button name="command" value="replaceInspector" type="submit" class="btn btn-warning" <c:if test="${disableReplaceInspectorButton}">disabled</c:if>><fmt:message key="replace.inspector"/></button>
-                </form>
-                <div class="info-message-label">
-                    <c:if test="${not empty message}"><fmt:message key="${message}"/></c:if>
+                        <div><fmt:message key="text.comment"/></div>
+                        <div class="form-group">
+                            <input type="text" class="form-control"
+                                   name="comment" placeholder="comment"/>
+                        </div>
+                        <div><fmt:message key="text.name"/></div>
+                        <div class="form-group">
+                            <input type="text" class="form-control"
+                                   value="${report.name}" name="name" placeholder="name">
+                        </div>
+                        <div><fmt:message key="text.address"/></div>
+                        <div class="form-group">
+                            <input type="text" class="form-control"
+                                   value="${report.address}" name="address"
+                                   placeholder="address">
+                        </div>
+                        <div><fmt:message key="text.bank_name"/></div>
+                        <div class="form-group">
+                            <input type="text" class="form-control"
+                                   value="${report.bank_name}" name="bank_name"
+                                   placeholder="bank_name">
+                        </div>
+                        <div class="form-group">
+                            <div><fmt:message key="text.bank_account"/></div>
+                            <input type="text" class="form-control"
+                                   value="${report.bank_account}" name="bank_account"
+                                   placeholder="bank_account">
+                        </div>
+                        <div class="form-group">
+                            <div><fmt:message key="text.bank_bic"/></div>
+                            <input type="text" class="form-control"
+                                   value="${report.bank_bic}" name="bank_bic"
+                                   placeholder="bank_bic">
+                        </div>
+
+                        <div class="form-group">
+                            <div><fmt:message key="text.code"/></div>
+                            <input type="text" class="form-control"
+                                   value="${report.code}" name="code" placeholder="code">
+                        </div>
+                        <div class="form-group">
+                            <div><fmt:message key="text.inn"/></div>
+                            <input type="text" class="form-control"
+                                   value="${report.inn}" name="inn" placeholder="inn">
+                        </div>
+                        <div class="form-group">
+                            <div><fmt:message key="text.kpp"/></div>
+                            <input type="text" class="form-control"
+                                   value="${report.kpp}" name="kpp" placeholder="kpp">
+                        </div>
+                        <div class="form-group">
+                            <div><fmt:message key="text.name_short"/></div>
+                            <input type="text" class="form-control"
+                                   value="${report.name_short}" name="name_short"
+                                   placeholder="name_short">
+                        </div>
+                        <div class="form-group">
+                            <div><fmt:message key="text.oktmo"/></div>
+                            <input type="text" class="form-control"
+                                   value="${report.oktmo}" name="oktmo" placeholder="oktmo">
+                        </div>
+                        <div class="form-group">
+                            <div><fmt:message key="text.parent_address"/></div>
+                            <input type="text" class="form-control"
+                                   value="${report.parent_address}"
+                                   name="parent_address"
+                                   placeholder="parent_address">
+                        </div>
+                        <div class="form-group">
+                            <div><fmt:message key="text.parent_code"/></div>
+                            <input type="text" class="form-control"
+                                   value="${report.parent_code}" name="parent_code"
+                                   placeholder="parent_code">
+                        </div>
+                        <div class="form-group">
+                            <div><fmt:message key="text.parent_name"/></div>
+                            <input type="text" class="form-control"
+                                   value="${report.parent_name}" name="parent_name"
+                                   placeholder="parent_name">
+                        </div>
+                        <div class="form-group">
+                            <div><fmt:message key="text.parent_phone"/></div>
+                            <input type="text" class="form-control"
+                                   value="${report.parent_phone}" name="parent_phone"
+                                   placeholder="parent_phone">
+                        </div>
+                        <div class="form-group">
+                            <div><fmt:message key="text.payment_name"/></div>
+                            <input type="text" class="form-control"
+                                   value="${report.payment_name}" name="payment_name"
+                                   placeholder="payment_name">
+                        </div>
+                        <div class="form-group">
+                            <div><fmt:message key="text.phone"/></div>
+                            <input type="text" class="form-control"
+                                   value="${report.phone}" name="phone" placeholder="phone">
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" name="inspectorId" value="${report.inspectorId.id}"/>
+                            <button name="command" value="updateReport" type="submit" class="btn btn-primary">
+                                <fmt:message key="text.save"/></button>
+                            <button name="command" value="deleteReport" type="submit" class="btn btn-primary">
+                                <fmt:message key="text.delete"/></button>
+                            <button name="command" value="changeInspector" class="btn btn-primary">
+                                <fmt:message key="text.change"/></button>
+                        </div>
+                    </form>
                 </div>
+
             </div>
         </div>
 
         <div class="card col-6" style="margin-top: 10px;">
             <div class="card-body">
-                <h5 class="card-title"><fmt:message key="tax.return.history"/>:</h5>
-                <c:forEach var="update" items="${report.updates}">
-                    <c:if test = "${locale == 'ua'}"><c:set var="userName" value="${update.user.fullNameUa}"/></c:if>
-                    <c:if test = "${locale == 'en'}"><c:set var="userName" value="${update.user.fullNameEn}"/></c:if>
+                <c:forEach var="a_mod" items="${mods}">
 
-                    <h6 class="${update.action}">
-                        <c:out value="${userName}"/>
-                        <fmt:message key="${update.action}"/>
-                        <fmt:parseDate value="${update.date}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
-                        <fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${parsedDateTime}"/>
-                    </h6>
-                    <c:if test="${not empty update.message}"><p class="intend-paragraph ${update.action}"><c:out value="${update.message}"/></p></c:if>
+                    <li class="list-group-item">
+                        <span>${a_mod.comment}</span>
+                        <div class="card-footer text-muted">
+                            <span>${a_mod.userId.username}</span>
+                            <span>${a_mod.date}</span>
+                            <i>${a_mod.action}</i>
+                        </div>
+                    </li>
+
                 </c:forEach>
+
+                <div class="m-2">
+                    <form method="post">
+                        <input type="text" class="form-control" name="comment" placeholder="comment">
+                        <div class="card-footer text-muted">
+                            <button name="command" value="createMod" type="submit" class="btn btn-primary">
+                                <fmt:message key="text.create"/></button>
+                        </div>
+                    </form>
+                </div>
+
             </div>
         </div>
     </div>

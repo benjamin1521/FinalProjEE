@@ -1,4 +1,4 @@
-<%@include file="imports.jsp"%>
+<%@include file="imports.jsp" %>
 
 <html lang="en">
 <head>
@@ -24,11 +24,14 @@
     <div class="container">
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/app/client"><fmt:message key="text.profile"/></a>
+                <li class="nav-item">
+                    <a class="nav-link" href="${pageContext.request.contextPath}/app/${user.role}">
+                        <fmt:message key="text.profile"/></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/app/client/reports"><fmt:message key="text.myreports"/></a>
+                    <a class="nav-link"
+                       href="${pageContext.request.contextPath}/app/${user.role}/reports?page=1">
+                        <fmt:message key="text.myreports"/></a>
                 </li>
                 <%--<li class="nav-item">--%>
                 <%--<a class="nav-link" href="${pageContext.request.contextPath}/app/client/new-tax-return"><fmt:message key="new.tax.return"/></a>--%>
@@ -36,7 +39,7 @@
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/app/client"><c:out value="${userName}" /></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/app/${user.role}"><c:out value="${userName}"/></a>
                 </li>
                 <li class="nav-item">
                     <form class="form-inline my-2 my-lg-0">

@@ -7,51 +7,123 @@
     <div class="row">
         <div class="card col-6" style="margin-top: 10px;">
             <div class="card-body">
-                <h5 class="card-title"><fmt:message key="${taxReturn.category}"/></h5>
-                <p class="intend-paragraph card-text">
-                <p><fmt:message key="${taxReturn.status}"/> <fmt:parseDate value="${taxReturn.lastUpdate}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" /> <fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${parsedDateTime}"/></p>
-                <p><div class="label d-inline"><fmt:message key="customer"/>: </div> <div class="d-inline"><c:out value="${customerName}"/></div></p>
-                <p><div class="label d-inline"><fmt:message key="inspector"/>: </div> <div class="d-inline"><c:out value="${inspectorName}" /></div></p>
-                </p>
-                <form class="form-group" method="post" action="${pageContext.request.contextPath}/download/tax-return">
-                    <input type="hidden" name="taxReturnId" value="${param.id}">
-                    <input type="hidden" name="customerName" value="${taxReturn.customer.fullNameEn}">
-                    <button type="submit" class="btn btn-link"><fmt:message key="download.tax.return"/></button>
-                </form>
-
-                <form class="form-group" method="post">
-                    <input type="hidden" name="lastUpdateId" value="${lastUpdateId}">
-                    <button name="command" value="APPROVE" type="submit" class="btn btn-success" <c:if test="${disableInspectorButtons}">disabled</c:if>><fmt:message key="approve"/></button>
-                </form>
-
-                <form class="form-group" method="post">
-                    <input type="hidden" name="lastUpdateId" value="${lastUpdateId}">
-                    <textarea required="required" class="form-control" rows="5" name="message" placeholder="<fmt:message key="input.message.for.customer"/>"></textarea>
-                    <button style="margin-top: 10px;" name="command" value="REQUEST_CHANGES" type="submit" class="btn btn-primary" <c:if test="${disableInspectorButtons}">disabled</c:if>><fmt:message key="request.changes"/></button>
-                    <button style="margin-top: 10px;" name="command" value="REJECT" type="submit" class="btn btn-danger" <c:if test="${disableInspectorButtons}">disabled</c:if>><fmt:message key="reject"/></button>
-                </form>
-                <div class="info-message-label">
-                    <c:if test="${not empty message}"><fmt:message key="${message}"/></c:if>
+                <div class="form-group mt-3">
+                    <%--<form method="post">--%>
+                    <div class="form-group">
+                        <fmt:message key="text.inspector"/>:
+                        <c:out value="${report.inspectorId.fullNameEn}"/>
+                    </div>
+                    <div class="form-group">
+                        <fmt:message key="text.name"/>:
+                        <c:out value="${report.name}"/>
+                    </div>
+                    <div class="form-group">
+                        <fmt:message key="text.address"/>:
+                        <c:out value="${report.address}"/>
+                    </div>
+                    <div class="form-group">
+                        <fmt:message key="text.bank_name"/>:
+                        <c:out value="${report.bank_name}"/>
+                    </div>
+                    <div class="form-group">
+                        <fmt:message key="text.bank_account"/>:
+                        <c:out value="${report.bank_account}"/>
+                    </div>
+                    <div class="form-group">
+                        <fmt:message key="text.bank_bic"/>:
+                        <c:out value="${report.bank_bic}"/>
+                    </div>
+                    <div class="form-group">
+                        <fmt:message key="text.code"/>:
+                        <c:out value="${report.code}"/>
+                    </div>
+                    <div class="form-group">
+                        <fmt:message key="text.inn"/>:
+                        <c:out value="${report.inn}"/>
+                    </div>
+                    <div class="form-group">
+                        <fmt:message key="text.kpp"/>:
+                        <c:out value="${report.kpp}"/>
+                    </div>
+                    <div class="form-group">
+                        <fmt:message key="text.name_short"/>:
+                        <c:out value="${report.name_short}"/>
+                    </div>
+                    <div class="form-group">
+                        <fmt:message key="text.oktmo"/>:
+                        <c:out value="${report.oktmo}"/>
+                    </div>
+                    <div class="form-group">
+                        <fmt:message key="text.parent_address"/>:
+                        <c:out value="${report.parent_address}"/>
+                    </div>
+                    <div class="form-group">
+                        <fmt:message key="text.parent_code"/>:
+                        <c:out value="${report.parent_code}"/>
+                    </div>
+                    <div class="form-group">
+                        <fmt:message key="text.parent_name"/>:
+                        <c:out value="${report.parent_name}"/>
+                    </div>
+                    <div class="form-group">
+                        <fmt:message key="text.parent_phone"/>:
+                        <c:out value="${report.parent_phone}"/>
+                    </div>
+                    <div class="form-group">
+                        <fmt:message key="text.payment_name"/>:
+                        <c:out value="${report.payment_name}"/>
+                    </div>
+                    <div class="form-group">
+                        <fmt:message key="text.phone"/>:
+                        <c:out value="${report.phone}"/>
+                    </div>
+                    <%--<div><fmt:message key="text.comment"/></div>--%>
+                    <form method="post">
+                        <div class="form-group">
+                            <fmt:message key="text.comment"/>
+                            <input type="text" class="form-control"
+                                   name="comment" placeholder="comment"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" name="inspectorId" value="${report.inspectorId.id}"/>
+                            <button name="command" value="Shift" type="submit" class="btn btn-primary">
+                                <fmt:message key="text.shift"/></button>
+                            <button name="command" value="Approve" type="submit" class="btn btn-primary">
+                                <fmt:message key="text.approve"/></button>
+                            <button name="command" value="Reject" class="btn btn-primary">
+                                <fmt:message key="text.reject"/></button>
+                        </div>
+                    </form>
                 </div>
+
             </div>
         </div>
 
         <div class="card col-6" style="margin-top: 10px;">
             <div class="card-body">
-                <h5 class="card-title"><fmt:message key="tax.return.history"/>:</h5>
-                <c:forEach var="update" items="${taxReturn.updates}">
-                    <c:if test = "${locale == 'ua'}"><c:set var="userName" value="${update.user.fullNameUa}"/></c:if>
-                    <c:if test = "${locale == 'en'}"><c:set var="userName" value="${update.user.fullNameEn}"/></c:if>
+                <c:forEach var="a_mod" items="${mods}">
 
-                    <h6 class="${update.action}">
-                        <c:out value="${userName}"/>
-                        <fmt:message key="${update.action}"/>
-                        <fmt:parseDate value="${update.date}" pattern="yyyy-MM-dd'T'HH:mm" var="parsedDateTime" type="both" />
-                        <fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${parsedDateTime}"/>
-                    </h6>
-                    <c:if test="${not empty update.message}"><p class="intend-paragraph ${update.action}"><c:out value="${update.message}"/></p></c:if>
+                    <li class="list-group-item">
+                        <span>${a_mod.comment}</span>
+                        <div class="card-footer text-muted">
+                            <span>${a_mod.userId.username}</span>
+                            <span>${a_mod.date}</span>
+                            <i>${a_mod.action}</i>
+                        </div>
+                    </li>
 
                 </c:forEach>
+
+                <div class="m-2">
+                    <form method="post">
+                        <input type="text" class="form-control" name="comment" placeholder="comment">
+                        <div class="card-footer text-muted">
+                            <button name="command" value="createMod" type="submit" class="btn btn-primary">
+                                <fmt:message key="text.create"/></button>
+                        </div>
+                    </form>
+                </div>
+
             </div>
         </div>
     </div>

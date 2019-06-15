@@ -47,6 +47,66 @@ public class Report {
         return inspectorId;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getName_short() {
+        return name_short;
+    }
+
+    public String getBank_account() {
+        return bank_account;
+    }
+
+    public String getInn() {
+        return inn;
+    }
+
+    public String getBank_bic() {
+        return bank_bic;
+    }
+
+    public String getBank_name() {
+        return bank_name;
+    }
+
+    public String getKpp() {
+        return kpp;
+    }
+
+    public String getOktmo() {
+        return oktmo;
+    }
+
+    public String getParent_address() {
+        return parent_address;
+    }
+
+    public String getPayment_name() {
+        return payment_name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getParent_code() {
+        return parent_code;
+    }
+
+    public String getParent_name() {
+        return parent_name;
+    }
+
+    public String getParent_phone() {
+        return parent_phone;
+    }
+
     public void setStatus(Status status) {
         this.status = status;
     }

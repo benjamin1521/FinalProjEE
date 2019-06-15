@@ -9,6 +9,4 @@ public interface ObjectMapper<T> {
     T extractOne(ResultSet rs) throws SQLException;
 
     List<T> extractAll(ResultSet rs) throws SQLException;
-
-    T makeUnique(Map<Long, T> cache, T subject);
 }

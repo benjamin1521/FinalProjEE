@@ -2,7 +2,6 @@ package ua.training.model.dao.impl;
 
 import ua.training.model.dao.UserDao;
 import ua.training.model.dao.mapper.UserMapper;
-import ua.training.model.entities.Report;
 import ua.training.model.entities.User;
 import ua.training.model.exceptions.SQLRuntimeException;
 
@@ -18,11 +17,10 @@ public class JDBCUserDao implements UserDao {
     private ResourceBundle queries = ResourceBundle.getBundle("sql-queries");
     private UserMapper mapper = new UserMapper();
 
-    public JDBCUserDao(Connection connection) {
+    JDBCUserDao(Connection connection) {
         this.connection = connection;
     }
 
-    //TODO: check queries
     @Override
     public void create(User entity) {
 
@@ -46,11 +44,6 @@ public class JDBCUserDao implements UserDao {
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setLong(1, id);
             try (ResultSet rs = ps.executeQuery()) {
-
-//                if (!rs.next()) {
-//                    throw new SQLRuntimeException("no inspectors");
-//                }
-//                return (User) mapper.extractOne(rs);
                 return rs.next() ? mapper.extractOne(rs) : null;
 
             }
@@ -59,47 +52,13 @@ public class JDBCUserDao implements UserDao {
         }
     }
 
-    @Override
-    public List<User> findAll() {
-        String query = queries.getString("get.user.by.id");
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            try (ResultSet rs = ps.executeQuery()) {
-                if (!rs.next()) {
-                    throw new SQLRuntimeException("no such");
-                }
-                return mapper.extractAll(rs);
-            }
-        } catch (SQLException e) {
-            throw new SQLRuntimeException(e);
-        }
-
-    }
-
-    @Override
-    public void update(User entity) {
-
-    }
-
-    @Override
-    public void delete(Report id) {
-
-    }
-
-    @Override
-    public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @Override
     public List<User> findInspectors() {
         String query = queries.getString("get.inspectors");
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             try (ResultSet rs = ps.executeQuery()) {
-                return rs.next() ? mapper.extractAll(rs) : null;
+                return mapper.extractAll(rs);
             }
         } catch (SQLException e) {
             throw new SQLRuntimeException(e);
@@ -107,8 +66,16 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public List<User> findInspectorsNotThisReport(Report id) {
-        return null;
+    public List<User> findInspectorsNotThis(Long id) {
+        String query = queries.getString("get.inspectors.not.this");
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setLong(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                return mapper.extractAll(rs);
+            }
+        } catch (SQLException e) {
+            throw new SQLRuntimeException(e);
+        }
     }
 
     @Override
@@ -125,4 +92,14 @@ public class JDBCUserDao implements UserDao {
             throw new SQLRuntimeException(e);
         }
     }
+
+    @Override
+    public void close() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
