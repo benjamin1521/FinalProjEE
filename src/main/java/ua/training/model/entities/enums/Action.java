@@ -8,7 +8,8 @@ public enum Action {
     Approve(Status.Approved),
     Comment(Status.Active),
     Reject(Status.Rejected),
-    Shift(Status.Shifted);
+    Shift(Status.Shifted),
+    Change(Status.Active);
 
     private static final Map<String, Action> actions = new HashMap<>();
     private Status status;

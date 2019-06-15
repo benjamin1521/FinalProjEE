@@ -4,7 +4,6 @@ import ua.training.model.dao.ReportDao;
 import ua.training.model.dao.mapper.ReportMapper;
 import ua.training.model.entities.Report;
 import ua.training.model.entities.enums.Action;
-import ua.training.model.entities.enums.Status;
 import ua.training.model.exceptions.SQLRuntimeException;
 
 import java.sql.Connection;
@@ -24,8 +23,7 @@ public class JDBCReportDao implements ReportDao {
     }
 
     @Override
-    public void create(Report entity) {
-
+    public void create(Report entity) throws SQLException {
         String query = queries.getString("create.report");
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, entity.getName());
@@ -33,13 +31,11 @@ public class JDBCReportDao implements ReportDao {
             ps.setLong(3, entity.getClientId().getId());
             ps.setLong(4, entity.getInspectorId().getId());
             ps.execute();
-        } catch (SQLException e) {
-            throw new SQLRuntimeException(e);
         }
     }
 
     @Override
-    public Report findById(Long id) {
+    public Report findById(Long id) throws SQLException {
         String query = queries.getString("get.report.by.id");
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setLong(1, id);
@@ -47,13 +43,11 @@ public class JDBCReportDao implements ReportDao {
                 rs.next();
                 return mapper.extractOne(rs);
             }
-        } catch (SQLException e) {
-            throw new SQLRuntimeException(e);
         }
     }
 
     @Override
-    public void update(Report entity) {
+    public void update(Report entity) throws SQLException {
         String query = queries.getString("update.report");
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, entity.getAddress());
@@ -75,117 +69,91 @@ public class JDBCReportDao implements ReportDao {
             ps.setString(17, entity.getStatus().toString());
             ps.setLong(18, entity.getId());
             ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new SQLRuntimeException(e);
         }
     }
 
     @Override
-    public void updateStatus(Long report, Action action) {
+    public boolean updateStatus(Long report, Action action) throws SQLException {
         String query = queries.getString("update.status");
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, action.getStatus().toString());
             ps.setLong(2, report);
             ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new SQLRuntimeException(e);
         }
+        return false;
     }
 
     @Override
-    public void updateInspector(Long inspector, Long report) {
+    public void updateInspector(Long inspector, Long report) throws SQLException {
         String query = queries.getString("update.inspector");
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setLong(1, inspector);
             ps.setLong(2, report);
             ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
     @Override
-    public void delete(Long report) {
+    public void delete(Long report) throws SQLException {
         String query = queries.getString("delete.report");
-
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setLong(1, report);
             ps.execute();
-        } catch (SQLException e) {
-            throw new SQLRuntimeException(e);
         }
     }
 
 
     @Override
-    public int getCount(Long userId) {
+    public int getCount(Long userId) throws SQLException {
         String query = queries.getString("get.reports.count");
-
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setLong(1, userId);
             ps.setLong(2, userId);
-
             try (ResultSet rs = ps.executeQuery()) {
-                rs.next();
-                return rs.getInt(1);
+                return rs.next() ? rs.getInt(1) : 0;
             }
-        } catch (SQLException ex) {
-            throw new SQLRuntimeException(ex);
         }
     }
 
     @Override
-    public int getCount(Long userId, Status status) {
+    public int getCount(Long userId, String status) throws SQLException {
         String query = queries.getString("get.reports.count.by.status");
-
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setLong(1, userId);
             ps.setLong(2, userId);
-            ps.setString(3, status.toString());
-
+            ps.setString(3, status);
             try (ResultSet rs = ps.executeQuery()) {
-                rs.next();
-                return rs.getInt(1);
+                return rs.next() ? rs.getInt(1) : 0;
             }
-        } catch (SQLException ex) {
-            throw new SQLRuntimeException(ex);
         }
     }
 
     @Override
-    public List<Report> getPage(Long userId, int offset, int limit) {
+    public List<Report> getPage(Long userId, int offset, int limit) throws SQLException {
         String query = queries.getString("get.reports.page");
-
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setLong(1, userId);
             ps.setLong(2, userId);
             ps.setInt(3, offset);
             ps.setInt(4, limit);
-
             try (ResultSet rs = ps.executeQuery()) {
                 return mapper.extractAllParts(rs);
             }
-        } catch (SQLException ex) {
-            throw new SQLRuntimeException(ex);
         }
     }
 
     @Override
-    public List<Report> getPage(Long userId, int offset, int limit, Status status) {
+    public List<Report> getPage(Long userId, int offset, int limit, String status) throws SQLException {
         String query = queries.getString("get.reports.page.by.status");
-
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setLong(1, userId);
             ps.setLong(2, userId);
-            ps.setString(3, status.toString());
+            ps.setString(3, status);
             ps.setInt(4, offset);
             ps.setInt(5, limit);
-
             try (ResultSet rs = ps.executeQuery()) {
                 return mapper.extractAllParts(rs);
             }
-        } catch (SQLException ex) {
-            throw new SQLRuntimeException(ex);
         }
     }
 
@@ -197,5 +165,4 @@ public class JDBCReportDao implements ReportDao {
             throw new SQLRuntimeException(e);
         }
     }
-
 }

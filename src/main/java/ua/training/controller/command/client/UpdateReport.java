@@ -1,5 +1,6 @@
 package ua.training.controller.command.client;
 
+import org.apache.log4j.Logger;
 import ua.training.controller.command.Command;
 import ua.training.model.entities.Report;
 import ua.training.model.entities.User;
@@ -9,12 +10,12 @@ import ua.training.model.service.ReportService;
 import javax.servlet.http.HttpServletRequest;
 
 public class UpdateReport implements Command {
+    private static final Logger logger = Logger.getLogger(UpdateReport.class);
     private ReportService reportService = new ReportService();
 
     @Override
     public String execute(HttpServletRequest request) {
         User client = (User) request.getSession().getAttribute("user");
-//        Report report = (Report) request.getAttribute("report");
         Report report = Report.newBuilder()
                 .id(Long.parseLong(request.getParameter("id")))
                 .status(Status.Active)
@@ -36,7 +37,9 @@ public class UpdateReport implements Command {
                 .payment_name(request.getParameter("payment_name"))
                 .phone(request.getParameter("phone"))
                 .build();
-        reportService.updateReport(client, report, request.getParameter("comment"));
+        if(reportService.updateReport(client, report, request.getParameter("comment"))){
+            logger.info(String.format("client %d updated report %d",client.getId(),report.getId()));
+        }
 
         return "redirect:/client/reports?page=1";
     }

@@ -54,6 +54,10 @@
 
 package ua.training.controller.filters;
 
+import org.apache.log4j.Logger;
+import ua.training.model.entities.User;
+import ua.training.model.entities.enums.Role;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -67,6 +71,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class AuthFilter implements Filter {
+    private static final Logger logger = Logger.getLogger(AuthFilter.class);
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -79,13 +85,6 @@ public class AuthFilter implements Filter {
 
         final HttpServletRequest req = (HttpServletRequest) request;
         final HttpServletResponse res = (HttpServletResponse) response;
-
-        HttpSession session = req.getSession();
-//        ServletContext context = request.getServletContext();
-//        System.out.println(session);
-//        System.out.println(session.getAttribute("role"));
-//        System.out.println(context.getAttribute("loggedUsers"));
-
 
         filterChain.doFilter(request, response);
     }

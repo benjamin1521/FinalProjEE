@@ -11,10 +11,10 @@ import ua.training.controller.command.guest.ShowRegistration;
 import ua.training.controller.command.inspector.ChangeStatus;
 import ua.training.controller.command.shared.ChangeLanguage;
 import ua.training.controller.command.shared.CreateMod;
-import ua.training.controller.command.shared.LogOut;
-import ua.training.controller.command.shared.RedirectHome;
+import ua.training.controller.command.redirects.LogOut;
+import ua.training.controller.command.redirects.RedirectHome;
 import ua.training.controller.command.shared.ShowDetails;
-import ua.training.controller.command.shared.ShowMainPage;
+import ua.training.controller.command.redirects.ShowMainPage;
 import ua.training.controller.command.shared.ShowReports;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,7 +59,7 @@ public class CommandFactory {
         commands.put("Shift", new ChangeStatus());
 
         //common
-        commands.put("createMod", new CreateMod());
+        commands.put("Comment", new CreateMod());
         commands.put("logout", new LogOut());
         commands.put("changeLanguage", new ChangeLanguage());
 
@@ -74,7 +74,7 @@ public class CommandFactory {
     public Command getCommand(HttpServletRequest request) {
         String command = request.getParameter("command");
 
-        System.out.println("GC: " + command);
+        System.out.println("Command: " + command);
         if (command == null) {
             return getCommandPage(request);
         }

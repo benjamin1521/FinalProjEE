@@ -10,7 +10,6 @@ public class Report {
     private User inspectorId;
     private String name;
 
-    //Next is json data
     private String code;
     private String name_short;
     private String address;
@@ -109,10 +108,6 @@ public class Report {
 
     public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public void setInspectorId(User inspectorId) {
-        this.inspectorId = inspectorId;
     }
 
 

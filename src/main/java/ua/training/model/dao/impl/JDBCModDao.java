@@ -23,7 +23,7 @@ public class JDBCModDao implements ModDao {
     }
 
     @Override
-    public void create(Mod entity) {
+    public void create(Mod entity) throws SQLException {
         String query = queries.getString("create.mod");
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, entity.getAction().toString());
@@ -32,35 +32,26 @@ public class JDBCModDao implements ModDao {
             ps.setLong(4, entity.getReportsId());
             ps.setLong(5, entity.getUserId().getId());
             ps.execute();
-        } catch (SQLException e) {
-            throw new SQLRuntimeException(e);
         }
     }
 
     @Override
-    public List<Mod> findByReportId(Long id) {
+    public List<Mod> findByReportId(Long id) throws SQLException {
         String query = queries.getString("get.mods.by.report.id");
-
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setLong(1, id);
-
             try (ResultSet rs = ps.executeQuery()) {
                 return mapper.extractAll(rs);
             }
-        } catch (SQLException ex) {
-            throw new SQLRuntimeException(ex);
         }
     }
 
     @Override
-    public void deleteAllByReportsId(Long id) {
+    public void deleteAllByReportsId(Long id) throws SQLException {
         String query = queries.getString("delete.mods.by.report.id");
-
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setLong(1, id);
             ps.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 

@@ -43,17 +43,16 @@ public class Registration implements Command {
     }
 
     //TODO: regexps, check responses
-    private final ResourceBundle regexps = ResourceBundle.getBundle("regexps");
+    private static final ResourceBundle regexps = ResourceBundle.getBundle("regexps");
     private final List<String> fields = Arrays.asList(
             "username", "fullNameUa", "fullNameEn", "password");
 
     private boolean validateRequest(HttpServletRequest request) {
-//        String personType = request.getParameter("personType");
         boolean allFieldsValid = true;
 
         for (String field : fields) {
             String value = request.getParameter(field);
-            if (value.matches(regexps.getString(/*personType + "." + */field))) {
+            if (value.matches(regexps.getString(field))) {
                 request.setAttribute(field, value);
                 continue;
             }

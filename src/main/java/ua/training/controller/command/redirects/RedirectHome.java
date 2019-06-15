@@ -1,4 +1,4 @@
-package ua.training.controller.command.shared;
+package ua.training.controller.command.redirects;
 
 import ua.training.controller.command.Command;
 

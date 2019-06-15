@@ -17,16 +17,26 @@ public class ShowReports implements Command {
     public String execute(HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
         String urlRole = user.getRole().toString().toLowerCase();
-
-
         int page = Integer.parseInt(request.getParameter("page"));
+        String status = Status.getOrNull(request.getParameter("status"));
 
-        Status status = Status.getOrNull(request.getParameter("status"));
-        //TODO: fix with optional
-        if (page < 1) page = 1;
+        if (page < 1) {
+            return String.format("redirect:/%s/reports?page=1&status=%s", urlRole, status);
+        }
 
         PaginationReports result = reportService.getPage(user, page, REPORTS_PER_PAGE, status);
 
+        if (result.getTotal() == 0) {
+            request.setAttribute("noReports", true);
+            return String.format("/%s/reports", urlRole);
+        }
+
+        if (result.getTotal() <= REPORTS_PER_PAGE * (page - 1)) {
+            return String.format("redirect:/%s/reports?page=%s&status=%s",
+                    urlRole,
+                    (int) Math.ceil((double) result.getTotal() / REPORTS_PER_PAGE),
+                    status);
+        }
 
         request.setAttribute("paginationReports", result);
 

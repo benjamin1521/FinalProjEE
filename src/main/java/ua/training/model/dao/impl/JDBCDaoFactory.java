@@ -10,28 +10,20 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class JDBCDaoFactory extends DaoFactory {
-    private DataSource dataSource = ConnectionPoolHolder.getDataSource();
 
     @Override
-    public ReportDao createReportDao() {
-        return new JDBCReportDao(getConnection());
-    }
-
-    @Override
-    public UserDao createUserDao() {
-        return new JDBCUserDao(getConnection());
+    public ReportDao createReportDao(Connection connection) {
+        return new JDBCReportDao(connection);
     }
 
     @Override
-    public ModDao createModDao() {
-        return new JDBCModDao(getConnection());
+    public UserDao createUserDao(Connection connection) {
+        return new JDBCUserDao(connection);
     }
 
-    private Connection getConnection() {
-        try {
-            return dataSource.getConnection();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    @Override
+    public ModDao createModDao(Connection connection) {
+        return new JDBCModDao(connection);
     }
+
 }

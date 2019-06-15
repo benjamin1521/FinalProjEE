@@ -9,9 +9,19 @@
             <div class="card-body">
                 <div class="form-group mt-3">
                     <%--<form method="post">--%>
+
+                        <c:choose>
+                            <c:when test="${locale == 'ua'}">
+                                <c:set var="userName" value="${report.inspectorId.fullNameUa}"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="userName" value="${report.inspectorId.fullNameEn}"/>
+                            </c:otherwise>
+                        </c:choose>
+
                     <div class="form-group">
                         <fmt:message key="text.inspector"/>:
-                        <c:out value="${report.inspectorId.fullNameEn}"/>
+                        <c:out value="${userName}"/>
                     </div>
                     <div class="form-group">
                         <fmt:message key="text.name"/>:
@@ -103,10 +113,20 @@
             <div class="card-body">
                 <c:forEach var="a_mod" items="${mods}">
 
+                    <c:choose>
+                        <c:when test="${locale == 'ua'}">
+                            <c:set var="userName" value="${a_mod.userId.fullNameUa}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <c:set var="userName" value="${a_mod.userId.fullNameEn}"/>
+                        </c:otherwise>
+                    </c:choose>
+
                     <li class="list-group-item">
                         <span>${a_mod.comment}</span>
                         <div class="card-footer text-muted">
-                            <span>${a_mod.userId.username}</span>
+
+                            <span><c:out value="${userName}"/></span>
                             <span>${a_mod.date}</span>
                             <i>${a_mod.action}</i>
                         </div>
@@ -118,7 +138,7 @@
                     <form method="post">
                         <input type="text" class="form-control" name="comment" placeholder="comment">
                         <div class="card-footer text-muted">
-                            <button name="command" value="createMod" type="submit" class="btn btn-primary">
+                            <button name="command" value="Comment" type="submit" class="btn btn-primary">
                                 <fmt:message key="text.create"/></button>
                         </div>
                     </form>

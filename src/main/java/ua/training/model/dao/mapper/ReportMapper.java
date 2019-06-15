@@ -46,7 +46,12 @@ public class ReportMapper implements ObjectMapper<Report> {
 
     @Override
     public List<Report> extractAll(ResultSet rs) throws SQLException {
-        return null;
+        List<Report> result = new ArrayList<>();
+        while (rs.next()) {
+            result.add(extractPart(rs));
+        }
+
+        return result;
     }
 
     private Report extractPart(ResultSet rs) throws SQLException {

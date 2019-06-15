@@ -8,8 +8,11 @@ public enum Status {
 
     private static final Map<String, Status> statuses = new HashMap<>();
 
-    public static Status getOrNull(String test) {
-        return statuses.getOrDefault(test, null);
+    public static String getOrNull(String test) {
+        Status result = statuses.getOrDefault(test, null);
+
+        return result == null ? "All" : result.toString();
+
     }
 
     static {

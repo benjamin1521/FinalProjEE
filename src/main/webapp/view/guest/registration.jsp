@@ -17,7 +17,7 @@
 
 <div class="container">
     <div class="d-flex justify-content-center h-100">
-        <div class="card">
+        <div class="card" style="margin-top: auto; margin-bottom: auto; width: 400px;">
             <div class="card-body">
                 <form method="post">
                     <div class="form-group">
@@ -37,7 +37,7 @@
                         <input name="password" type="password" class="form-control"/>
                     </div>
                     <input name="personType" type="hidden" value="${personType}">
-                    <button name="command" value="register" type="submit" class="btn btn-primary"><fmt:message key="text.create"/></button>
+                    <button name="command" value="registration" type="submit" class="btn btn-primary"><fmt:message key="text.create"/></button>
                 </form>
                 <div class="info-message-label">
                     <c:if test="${not empty message}"><fmt:message key="${message}"/></c:if>
@@ -45,7 +45,7 @@
             </div>
             <div class="card-footer">
                 <div class="d-flex justify-content-center">
-                    <a href="${pageContext.request.contextPath}/tax-system/guest"> < <fmt:message key="text.back"/></a>
+                    <a href="${pageContext.request.contextPath}/app/guest"> < <fmt:message key="text.back"/></a>
                 </div>
             </div>
         </div>

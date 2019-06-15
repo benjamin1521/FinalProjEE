@@ -15,10 +15,13 @@
         <a href="${pageContext.request.contextPath}/app/${user.role}/reports?page=1&status=Approved"
            class="btn btn-info">
             <fmt:message key="text.approved"/></a>
+        <a href="${pageContext.request.contextPath}/app/${user.role}/reports?page=1&status=Shifted"
+           class="btn btn-info">
+            <fmt:message key="text.shifted"/></a>
     </div>
 
     <c:choose>
-        <c:when test="${noTaxReturns}">
+        <c:when test="${noReports}">
             <p style="text-align: center; margin-top: 300px;"><fmt:message key="text.noreports"/></p>
         </c:when>
         <c:otherwise>

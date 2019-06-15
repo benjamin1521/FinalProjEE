@@ -15,10 +15,13 @@
         <a href="${pageContext.request.contextPath}/app/${user.role}/reports?page=1&status=Approved"
            class="btn btn-info">
             <fmt:message key="text.approved"/></a>
+        <a href="${pageContext.request.contextPath}/app/${user.role}/reports?page=1&status=Shifted"
+           class="btn btn-info">
+            <fmt:message key="text.shifted"/></a>
     </div>
 
     <c:choose>
-        <c:when test="${noTaxReturns}">
+        <c:when test="${noReports}">
             <p style="text-align: center; margin-top: 300px;"><fmt:message key="text.noreports"/></p>
         </c:when>
         <c:otherwise>
@@ -41,22 +44,6 @@
                         </td>
                     </tr>
                 </c:forEach>
-                <form method="post">
-                    <tr>
-                        <td>
-                            <input type="text" class="form-control" name="name" placeholder=
-                                <fmt:message key="text.name"/>>
-                        </td>
-                        <td>
-                            <input type="text" class="form-control" name="comment" placeholder=
-                                <fmt:message key="text.comment"/>>
-                        </td>
-                        <td>
-                            <button name="command" value="createReport" type="submit" class="btn btn-primary">
-                                <fmt:message key="text.create"/></button>
-                        </td>
-                    </tr>
-                </form>
                 </tbody>
             </table>
             <div class="navigation-block">
@@ -68,4 +55,13 @@
             </div>
         </c:otherwise>
     </c:choose>
+    <form method="post">
+        <div class="form-group">
+            <input type="text" class="form-control" name="name" placeholder=
+            <fmt:message key="text.name"/>>
+            <button name="command" value="createReport" type="submit" class="btn btn-primary">
+                <fmt:message key="text.create"/></button>
+        </div>
+        </tr>
+    </form>
 </div>

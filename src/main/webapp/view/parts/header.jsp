@@ -33,9 +33,6 @@
                        href="${pageContext.request.contextPath}/app/${user.role}/reports?page=1">
                         <fmt:message key="text.myreports"/></a>
                 </li>
-                <%--<li class="nav-item">--%>
-                <%--<a class="nav-link" href="${pageContext.request.contextPath}/app/client/new-tax-return"><fmt:message key="new.tax.return"/></a>--%>
-                <%--</li>--%>
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">

@@ -22,8 +22,7 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public void create(User entity) {
-
+    public void create(User entity) throws SQLException {
         String query = queries.getString("create.user");
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, entity.getRole().toString());
@@ -33,13 +32,11 @@ public class JDBCUserDao implements UserDao {
             ps.setString(5, entity.getFullNameEn());
             ps.setString(6, entity.getFullNameUa());
             ps.execute();
-        } catch (SQLException e) {
-            throw new SQLRuntimeException(e);
         }
     }
 
     @Override
-    public User findById(Long id) {
+    public User findById(Long id) throws SQLException {
         String query = queries.getString("get.user.by.id");
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setLong(1, id);
@@ -47,39 +44,33 @@ public class JDBCUserDao implements UserDao {
                 return rs.next() ? mapper.extractOne(rs) : null;
 
             }
-        } catch (SQLException e) {
-            throw new SQLRuntimeException(e);
         }
     }
 
 
     @Override
-    public List<User> findInspectors() {
+    public List<User> findInspectors() throws SQLException {
         String query = queries.getString("get.inspectors");
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             try (ResultSet rs = ps.executeQuery()) {
                 return mapper.extractAll(rs);
             }
-        } catch (SQLException e) {
-            throw new SQLRuntimeException(e);
         }
     }
 
     @Override
-    public List<User> findInspectorsNotThis(Long id) {
+    public List<User> findInspectorsNotThis(Long id) throws SQLException {
         String query = queries.getString("get.inspectors.not.this");
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setLong(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 return mapper.extractAll(rs);
             }
-        } catch (SQLException e) {
-            throw new SQLRuntimeException(e);
         }
     }
 
     @Override
-    public User findByUsernameAhdPassword(String username, String password) {
+    public User findByUsernameAhdPassword(String username, String password) throws SQLException {
         String query = queries.getString("get.user.by.username.and.password");
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, username);
@@ -88,8 +79,6 @@ public class JDBCUserDao implements UserDao {
             try (ResultSet rs = ps.executeQuery()) {
                 return rs.next() ? mapper.extractOne(rs) : null;
             }
-        } catch (SQLException e) {
-            throw new SQLRuntimeException(e);
         }
     }
 
