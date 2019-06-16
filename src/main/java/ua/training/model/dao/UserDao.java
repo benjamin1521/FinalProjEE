@@ -8,12 +8,11 @@ import java.util.List;
 public interface UserDao extends AutoCloseable {
     void create(User entity) throws SQLException;
 
-    User findById(Long id) throws SQLException;
+    User findByUsername(String username) throws SQLException;
 
     User findByUsernameAhdPassword(String username, String password) throws SQLException;
 
     List<User> findInspectors() throws SQLException;
 
     List<User> findInspectorsNotThis(Long id) throws SQLException;
-
 }

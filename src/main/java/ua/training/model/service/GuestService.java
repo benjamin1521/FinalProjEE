@@ -32,7 +32,7 @@ public class GuestService {
             UserDao userDao = daoFactory.createUserDao(connection);
             connection.setAutoCommit(false);
 
-            User userFromDb = userDao.findById(user.getId());
+            User userFromDb = userDao.findByUsername(user.getUsername());
             if (userFromDb != null) {
                 return false;
             }

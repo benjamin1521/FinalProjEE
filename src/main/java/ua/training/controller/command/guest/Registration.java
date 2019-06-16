@@ -26,7 +26,7 @@ public class Registration implements Command {
                     .username(request.getParameter("username"))
                     .fullNameEn(request.getParameter("fullNameEn"))
                     .fullNameUa(request.getParameter("fullNameUa"))
-                    .clientType(ClientType.valueOf(request.getParameter("clientType")))
+                    .clientType(ClientType.Physical)
                     .build();
 
             if (guestService.createUser(user, request.getParameter("password"))) {
@@ -42,7 +42,6 @@ public class Registration implements Command {
         return CommandFactory.getInstance().getCommandPage(request).execute(request);
     }
 
-    //TODO: regexps, check responses
     private static final ResourceBundle regexps = ResourceBundle.getBundle("regexps");
     private final List<String> fields = Arrays.asList(
             "username", "fullNameUa", "fullNameEn", "password");
@@ -56,6 +55,7 @@ public class Registration implements Command {
                 request.setAttribute(field, value);
                 continue;
             }
+            request.setAttribute("message_" + field, true);
             allFieldsValid = false;
         }
         return allFieldsValid;

@@ -22,21 +22,32 @@
                 <form method="post">
                     <div class="form-group">
                         <label><fmt:message key="text.username"/></label>
-                        <input name="email" type="text" class="form-control" value="${email}">
+                        <input name="username" type="text" class="form-control" value="${email}">
+                        <div class="info-message-label">
+                            <c:if test="${not empty message_username}"><fmt:message key="text.match"/> ${message_username}</c:if>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label><fmt:message key="text.fullname.ua"/></label>
                         <input name="fullNameUa" type="text" class="form-control" value="${fullNameUa}">
+                        <div class="info-message-label">
+                            <c:if test="${not empty message_fullNameUa}"><fmt:message key="text.match"/> ${message_fullNameUa}</c:if>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label><fmt:message key="text.fullname.en"/></label>
                         <input name="fullNameEn" type="text" class="form-control" value="${fullNameEn}">
+                        <div class="info-message-label">
+                            <c:if test="${not empty message_fullNameEn}"><fmt:message key="text.match"/> ${message_fullNameEn}</c:if>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label><fmt:message key="text.password"/></label>
                         <input name="password" type="password" class="form-control"/>
+                        <div class="info-message-label">
+                            <c:if test="${not empty message_password}"><fmt:message key="text.match"/> ${message_password}</c:if>
+                        </div>
                     </div>
-                    <input name="personType" type="hidden" value="${personType}">
                     <button name="command" value="registration" type="submit" class="btn btn-primary"><fmt:message key="text.create"/></button>
                 </form>
                 <div class="info-message-label">

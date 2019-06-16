@@ -168,7 +168,7 @@ public class ReportService {
         }
     }
 
-    public void addMod(User user, Long report, String comment, Action action, ModDao modDao) throws SQLException {
+    private void addMod(User user, Long report, String comment, Action action, ModDao modDao) throws SQLException {
         modDao.create(Mod.newBuilder()
                 .action(action)
                 .comment(comment)

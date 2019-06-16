@@ -35,37 +35,3 @@ public class Login implements Command {
     }
 }
 
-
-//package ua.training.controller.command.guest;
-//
-//import ua.training.controller.command.Command;
-//import ua.training.model.entities.enums.Role;
-//
-//import javax.servlet.http.HttpServletRequest;
-//
-//public class Login implements Command {
-//    @Override
-//    public String execute(HttpServletRequest request) {
-//        String name = request.getParameter("name");
-//        String pass = request.getParameter("pass");
-//
-//        System.out.println(name + " " + pass);
-//        if (name == null || name.equals("") || pass == null || pass.equals("")) {
-//            return "/guest/login";
-//        }
-//
-//        if(CommandUtility.checkUserIsLogged(request, name)){
-//            return "/error";
-//        }
-//
-//        if (name.equals("Inspector")){
-//            CommandUtility.setUserRole(request, Role.Inspector, name);
-//            return "/inspector/mainpage";
-//        } else if(name.equals("Client")) {
-//            CommandUtility.setUserRole(request, Role.Client, name);
-//            return "/client/mainpage";
-//        } else {
-//            return "/guest/login";
-//        }
-//    }
-//}

@@ -36,10 +36,10 @@ public class JDBCUserDao implements UserDao {
     }
 
     @Override
-    public User findById(Long id) throws SQLException {
-        String query = queries.getString("get.user.by.id");
+    public User findByUsername(String username) throws SQLException {
+        String query = queries.getString("get.user.by.username");
         try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setLong(1, id);
+            ps.setString(1, username);
             try (ResultSet rs = ps.executeQuery()) {
                 return rs.next() ? mapper.extractOne(rs) : null;
 

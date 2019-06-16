@@ -5,7 +5,7 @@ import ua.training.model.entities.Report;
 import java.util.List;
 
 public class PaginationReports {
-    private List<Report> list; // tax return must contain id, category, lastUpdate, status; for inspectors also username
+    private List<Report> list;
     private int firstNumber;
     private int lastNumber;
     private int total;
