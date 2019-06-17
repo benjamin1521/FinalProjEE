@@ -20,6 +20,7 @@ public class ChangeStatus implements Command {
         Action action = Action.getOrNull(request.getParameter("command"));
 
         if (reportService.changeStatus(action, report, user, comment)) {
+            System.out.println("ok");
             logger.info(String.format("inspector %d updated report %d: %s",
                     user.getId(),report,action));
         }

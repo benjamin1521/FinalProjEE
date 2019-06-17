@@ -110,7 +110,9 @@ public class ReportService {
             ModDao modDao = daoFactory.createModDao(connection);
             connection.setAutoCommit(false);
 
+            System.out.println("ok, well");
             if (!reportDao.updateStatus(report, action)) {
+                System.out.println("very well");
                 return false;
             }
             addMod(user, report, comment, action, modDao);

@@ -80,7 +80,7 @@ public class JDBCReportDao implements ReportDao {
             ps.setLong(2, report);
             ps.executeUpdate();
         }
-        return false;
+        return true;
     }
 
     @Override
