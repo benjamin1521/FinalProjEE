@@ -1,5 +1,6 @@
 package ua.training.controller.listener;
 
+import ua.training.model.entities.User;
 import ua.training.model.entities.enums.Role;
 
 import javax.servlet.http.HttpSessionEvent;
@@ -17,6 +18,13 @@ public class SessionListener implements HttpSessionListener {
 
     @Override
     public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
+        HashSet<String> loggedUsers = (HashSet<String>) httpSessionEvent
+                .getSession().getServletContext()
+                .getAttribute("loggedUsers");
+        User user = (User) httpSessionEvent.getSession().getAttribute("user");
+        loggedUsers.remove(user.getUsername());
+        httpSessionEvent.getSession().setAttribute("loggedUsers", loggedUsers);
+        System.out.println(loggedUsers);
 
     }
 }

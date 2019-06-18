@@ -18,6 +18,12 @@ public class MainServlet extends HttpServlet {
 
     private CommandFactory commandFactory = CommandFactory.getInstance();
 
+    public void init(ServletConfig servletConfig) {
+
+        servletConfig.getServletContext()
+                .setAttribute("loggedUsers", new HashSet<String>());
+    }
+
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response)
             throws IOException, ServletException {
