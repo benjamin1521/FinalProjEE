@@ -22,12 +22,12 @@ public class Login implements Command {
         User user = guestService.getUser(username, password);
 
         if (user != null) {
-//            if (checkUserIsLogged(request, username)) {
-//                logger.info(String.format("user %d already logged in", user.getId()));
-//
-//                request.setAttribute("message", "text.already.logged");
-//                return CommandFactory.getInstance().getCommandPage(request).execute(request);
-//            }
+            if (checkUserIsLogged(request, username)) {
+                logger.info(String.format("user %d already logged in", user.getId()));
+
+                request.setAttribute("message", "text.already.logged");
+                return CommandFactory.getInstance().getCommandPage(request).execute(request);
+            }
             logger.info(String.format("user %d logged in", user.getId()));
 
             request.getSession().setAttribute("user", user);
@@ -41,17 +41,17 @@ public class Login implements Command {
         }
     }
 
-//    static public boolean checkUserIsLogged(HttpServletRequest request, String username) {
-//        HashSet<String> loggedUsers = (HashSet<String>) request.getSession().getServletContext()
-//                .getAttribute("loggedUsers");
-//
-//        if (loggedUsers.stream().anyMatch(username::equals)) {
-//            return true;
-//        }
-//        loggedUsers.add(username);
-//        request.getSession().getServletContext()
-//                .setAttribute("loggedUsers", loggedUsers);
-//        return false;
-//    }
+    static public boolean checkUserIsLogged(HttpServletRequest request, String username) {
+        HashSet<String> loggedUsers = (HashSet<String>) request.getSession().getServletContext()
+                .getAttribute("loggedUsers");
+
+        if (loggedUsers.stream().anyMatch(username::equals)) {
+            return true;
+        }
+        loggedUsers.add(username);
+        request.getSession().getServletContext()
+                .setAttribute("loggedUsers", loggedUsers);
+        return false;
+    }
 }
 
